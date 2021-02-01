@@ -1,5 +1,6 @@
 import React from "react";
 import './App.css';
+import UserList from "./usersList";
 
 class App extends React.Component {
   
@@ -22,8 +23,23 @@ class App extends React.Component {
   return (
     <div className="App">
       <header className="App-header">
-        {this.state.users.map(data => <p> {data.name} </p>)}
+       
       </header>
+      <body className="main-container">
+      <div >
+        <form  className="main-form">
+          <label>User</label>
+          <input type="text"></input>
+          <label>Age</label>
+          <input type="text"></input>
+          <div className="main-from__buttons">
+            <button>Add</button>
+            <button>Add</button>
+          </div>
+        </form>
+      </div>
+      <UserList data={this.state.users}/>
+      </body>
     </div>
   );}
   
