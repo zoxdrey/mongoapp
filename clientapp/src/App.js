@@ -1,5 +1,6 @@
 import React from "react";
 import './App.css';
+import UserList from "./usersList";
 
 class App extends React.Component {
   
@@ -22,7 +23,7 @@ class App extends React.Component {
   return (
     <div className="App">
       <header className="App-header">
-        {this.state.users.map(data => <p> {data.name} </p>)}
+       <UserList data={this.state.users}/>
       </header>
     </div>
   );}
