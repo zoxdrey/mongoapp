@@ -18,23 +18,38 @@ mongoClient.connect(function(err, client){
     dbClient = client;
     const db = client.db("time");
     const collection = db.collection("timelist");
+   
     app.locals.collection = collection;
     app.listen(appPort, function(){
         wr(`server ready for connection on port ${appPort}`)
     })
 });
 
-app.get("/api/time", function(req, res){
-        
+app.get("/api/totaltime", function(req, res){
+      
         const collection = req.app.locals.collection;
         collection.find({}).toArray(function(err, times){
              
             if(err) return console.log(err);
-            res.send(times)
+            let totalTime = 0;
+            for(let i = 0; i < times.length; i++){
+                totalTime += parseInt(times[i].time);
+            }
+            console.log(totalTime)
+            res.send(totalTime+'');
         });
          
     });
 
+app.get("/api/time", function(req, res){
+            const collection = req.app.locals.collection;
+            collection.find({}).toArray(function(err, times){
+                 
+                if(err) return console.log(err);
+                res.send(times)
+            });
+             
+     });
 
 app.post('/api/savetime', function(req, res){
     const collection = req.app.locals.collection;
