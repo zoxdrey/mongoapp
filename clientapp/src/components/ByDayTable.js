@@ -1,11 +1,10 @@
 import Table from 'react-bootstrap/Table'
 
 export default function ByDayTable({data}){
-    console.log({data});
     return (
       
     <div className="block by-day">
-    <div className="table-title">BY DAY TABLE</div>
+    <div className="table-title"><h1>BY DAY TABLE</h1></div>
     <Table id="by-day-table" className="by-day-table"striped bordered hover size="sm" variant="dark">
   <thead>
     <tr>
