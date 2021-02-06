@@ -12,28 +12,43 @@ let appPort = 3001;
 
 app.use(express.static(__dirname+"/clientapp"));
 app.use(cors());
-
+app.use(express.json())
 mongoClient.connect(function(err, client){
     if(err) return wr(err);
     dbClient = client;
-    const db = client.db("userdb");
-    const collection = db.collection("users");
+    const db = client.db("time");
+    const collection = db.collection("timelist");
     app.locals.collection = collection;
     app.listen(appPort, function(){
-        wr(`server ready dor connection on port ${appPort}`)
+        wr(`server ready for connection on port ${appPort}`)
     })
 });
 
-app.get("/api/users", function(req, res){
+app.get("/api/time", function(req, res){
         
         const collection = req.app.locals.collection;
-        collection.find({}).toArray(function(err, users){
+        collection.find({}).toArray(function(err, times){
              
             if(err) return console.log(err);
-            res.send(users)
+            res.send(times)
         });
          
     });
+
+
+app.post('/api/savetime', function(req, res){
+    const collection = req.app.locals.collection;
+    console.log(req.body)
+    const data = req.body;
+    collection.insertOne(data, function(err, result){
+          
+     if(err){ 
+           return console.log(err);
+      }
+       console.log(result.ops);
+})
+}
+);
 
 
 const wr = (str) => console.log(str);
